@@ -40,6 +40,20 @@ exports.getById = async (req, res, next) => {
   }
 };
 
-exports.updateById = async (req, res, next) => {};
+exports.updateById = async (req, res, next) => {
+  let employee;
+  try {
+    employee = await Employee.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+    if (!employee) {
+      return next(new HttpError('Employee not found', 404));
+    }
+    return res.json({ success: true, data: employee });
+  } catch (error) {
+    return next(new HttpError('Unable to perform operation', 500));
+  }
+};
 
 exports.deleteById = async (req, res, next) => {};
