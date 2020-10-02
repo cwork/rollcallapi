@@ -6,6 +6,7 @@ const morgan = require('morgan');
 
 const dbConnect = require('./utils/db');
 const userRouter = require('./routers/user');
+const employeeRouter = require('./routers/employee');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -20,6 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/api/user', userRouter);
+app.use('/api/employee', employeeRouter);
 app.use(errorHandler);
 
 module.exports = app;
