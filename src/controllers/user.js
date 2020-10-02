@@ -69,4 +69,14 @@ exports.updateById = async (req, res, next) => {
   return res.status(200).json({ success: true, data: existingUser });
 };
 
-exports.deleteById = async (req, res, next) => {};
+exports.deleteById = async (req, res, next) => {
+  try {
+    const existingUser = await User.findByIdAndDelete(req.params.id);
+    if (!existingUser) {
+      return next(new HttpError('That user does not exist.', 404));
+    }
+    return res.json({ success: true, data: {} });
+  } catch (error) {
+    return next(new HttpError('Unable to perform operation', 500));
+  }
+};
