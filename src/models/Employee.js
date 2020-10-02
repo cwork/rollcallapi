@@ -35,7 +35,7 @@ const employeeSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  occurrences: [occurenceSchema]
+  occurrences: [occurrenceSchema]
 });
 
 const Employee = mongoose.model('Employee', employeeSchema);
