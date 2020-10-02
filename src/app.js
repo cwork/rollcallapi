@@ -15,7 +15,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-if (process.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   app.use(morgan('tiny'));
 }
 
