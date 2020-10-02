@@ -27,3 +27,12 @@ exports.create = async (req, res, next) => {
     .status(201)
     .json({ success: true, data: 'User created successfully' });
 };
+
+exports.getAll = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    return res.json({ success: true, data: users });
+  } catch (error) {
+    return next(new HttpError('Unable to retrieve data', 500));
+  }
+};
