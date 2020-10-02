@@ -5,6 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 const dbConnect = require('./utils/db');
+const userRouter = require('./routers/user');
 
 const app = express();
 dbConnect();
@@ -16,5 +17,7 @@ app.use(express.json());
 if (process.NODE_ENV === 'development') {
   app.use(morgan('tiny'));
 }
+
+app.use('/api/user', userRouter);
 
 module.exports = app;
