@@ -19,9 +19,26 @@ exports.create = async (req, res, next) => {
   return res.status(201).json({ success: true, data: employee });
 };
 
-exports.getAll = async (req, res, next) => {};
+exports.getAll = async (req, res, next) => {
+  try {
+    const employees = await Employee.find();
+    return res.json({ success: true, data: employees });
+  } catch (error) {
+    return next(new HttpError('Unable to retrieve data', 500));
+  }
+};
 
-exports.getById = async (req, res, next) => {};
+exports.getById = async (req, res, next) => {
+  try {
+    const employee = await Employee.findById(req.params.id);
+    if (!employee) {
+      return next(new HttpError('Employee not found', 404));
+    }
+    return res.json({ success: true, data: employee });
+  } catch (error) {
+    return next(new HttpError('Unable to retrieve employee', 500));
+  }
+};
 
 exports.updateById = async (req, res, next) => {};
 
