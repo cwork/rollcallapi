@@ -36,3 +36,9 @@ exports.getAll = async (req, res, next) => {
     return next(new HttpError('Unable to retrieve data', 500));
   }
 };
+
+exports.getById = async (req, res, next) => {};
+
+exports.updateById = async (req, res, next) => {};
+
+exports.deleteById = async (req, res, next) => {};
