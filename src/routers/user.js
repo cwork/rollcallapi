@@ -6,11 +6,11 @@ const {
   updateById,
   deleteById
 } = require('../controllers/user');
-const { protect } = require('../middleware/auth');
+const { protect, authorize } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.all('*', protect);
+router.all('*', protect, authorize('admin'));
 
 router.post('/', create);
 router.get('/', getAll);
