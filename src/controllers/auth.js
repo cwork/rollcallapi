@@ -10,7 +10,7 @@ exports.login = async (req, res, next) => {
   }
   try {
     const user = await User.findByCredentials(identifier, password);
-    return res.json({ success: true, data: user });
+    return res.json({ success: true, data: user.generateAuthToken() });
   } catch (error) {
     return next(new HttpError(error));
   }

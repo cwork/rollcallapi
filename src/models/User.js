@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const HttpError = require('./HttpError');
 
 const userSchema = new mongoose.Schema({
@@ -57,6 +58,12 @@ userSchema.statics.findByCredentials = async (identifier, password) => {
   }
 
   return user;
+};
+
+userSchema.methods.generateAuthToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES
+  });
 };
 
 const User = mongoose.model('User', userSchema);
