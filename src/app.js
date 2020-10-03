@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/user', userRouter);
 app.use('/api/employee', employeeRouter);
 app.use('/api/employee/:employeeId/occurrence', occurrenceRouter);
-app.use('/auth', authRouter);
+app.use('/api/auth', authRouter);
 app.use(errorHandler);
 
 module.exports = app;
