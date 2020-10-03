@@ -7,7 +7,7 @@ const {
   deleteById
 } = require('../controllers/occurrence');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.post('/', create);
 router.get('/', getAll);
