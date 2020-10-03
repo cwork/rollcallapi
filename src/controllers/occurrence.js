@@ -65,4 +65,21 @@ exports.updateById = async (req, res, next) => {
   }
 };
 
-exports.deleteById = async (req, res, next) => {};
+exports.deleteById = async (req, res, next) => {
+  try {
+    const employee = await Employee.findById(req.params.employeeId);
+    if (!employee) {
+      return next(new HttpError('Employee not found', 404));
+    }
+    const occurrence = employee.occurrences.id(req.params.occurrenceId);
+    if (!occurrence) {
+      return next(new HttpError('Occurrence not found'));
+    }
+    employee.occurrences.id(req.params.occurrenceId).remove();
+    await employee.save();
+    return res.json({ success: true, data: employee.occurrences });
+  } catch (error) {
+    console.log(error.message);
+    return next(new HttpError('Unable to delete occurrence', 500));
+  }
+};
