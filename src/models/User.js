@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const HttpError = require('./HttpError');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -38,6 +39,25 @@ userSchema.pre('save', async function (next) {
   }
   next();
 });
+
+userSchema.statics.findByCredentials = async (identifier, password) => {
+  const errorMessage = 'Invalid credentials';
+  const user =
+    (await User.findOne({ email: identifier }, '+password')) ||
+    (await User.findOne({ username: identifier }, '+password'));
+  if (!user) {
+    throw new HttpError(errorMessage, 401);
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  console.log(isMatch);
+
+  if (!isMatch) {
+    throw new HttpError(errorMessage, 401);
+  }
+
+  return user;
+};
 
 const User = mongoose.model('User', userSchema);
 
