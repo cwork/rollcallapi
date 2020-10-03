@@ -1,5 +1,6 @@
 const HttpError = require('../models/HttpError');
 const User = require('../models/User');
+const sendEmail = require('../utils/sendEmail');
 
 exports.create = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -22,6 +23,12 @@ exports.create = async (req, res, next) => {
   } catch (error) {
     return next(new HttpError('User creation failed', 500));
   }
+
+  sendEmail({
+    email: user.email,
+    subject: "You're account has been created!",
+    message: 'Colby has created an account for you at RollCall.'
+  });
 
   return res
     .status(201)
