@@ -31,7 +31,21 @@ exports.getAll = async (req, res, next) => {
   }
 };
 
-exports.getById = async (req, res, next) => {};
+exports.getById = async (req, res, next) => {
+  try {
+    const employee = await Employee.findById(req.params.employeeId);
+    if (!employee) {
+      return next(new HttpError('No employee found', 404));
+    }
+    const occurrence = await employee.occurrences.id(req.params.occurrenceId);
+    if (!occurrence) {
+      return next(new HttpError('No occurrence found', 404));
+    }
+    return res.json({ success: true, data: occurrence });
+  } catch (error) {
+    return next(new HttpError('Unable to get occurrence', 500));
+  }
+};
 
 exports.updateById = async (req, res, next) => {};
 
