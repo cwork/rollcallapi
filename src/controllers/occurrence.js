@@ -18,7 +18,18 @@ exports.create = async (req, res, next) => {
   }
 };
 
-exports.getAll = async (req, res, next) => {};
+exports.getAll = async (req, res, next) => {
+  try {
+    const employee = await Employee.findById(req.params.employeeId);
+    if (!employee) {
+      return next(new HttpError('Employee not found', 404));
+    }
+    return res.json({ success: true, data: employee.occurrences });
+  } catch (error) {
+    console.log(error.message);
+    return next(new HttpError('Unable to get occurrences', 500));
+  }
+};
 
 exports.getById = async (req, res, next) => {};
 
