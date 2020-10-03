@@ -6,8 +6,11 @@ const {
   updateById,
   deleteById
 } = require('../controllers/user');
+const { protect } = require('../middleware/auth');
 
 const router = express.Router();
+
+router.all('*', protect);
 
 router.post('/', create);
 router.get('/', getAll);

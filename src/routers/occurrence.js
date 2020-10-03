@@ -6,8 +6,11 @@ const {
   updateById,
   deleteById
 } = require('../controllers/occurrence');
+const { protect } = require('../middleware/auth');
 
 const router = express.Router({ mergeParams: true });
+
+router.all('*', protect);
 
 router.post('/', create);
 router.get('/', getAll);
