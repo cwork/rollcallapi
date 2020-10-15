@@ -4,6 +4,14 @@ const jwt = require('jsonwebtoken');
 const HttpError = require('./HttpError');
 
 const userSchema = new mongoose.Schema({
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
   username: {
     type: String,
     required: true,
@@ -61,6 +69,7 @@ userSchema.statics.findByCredentials = async (identifier, password) => {
 };
 
 userSchema.methods.generateAuthToken = function () {
+  console.log(process.env.JWT_EXPIRES);
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES
   });
