@@ -3,7 +3,7 @@ const User = require('../models/User');
 const sendEmail = require('../utils/sendEmail');
 
 exports.create = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { firstName, lastName, username, email, password } = req.body;
   let existingUser;
   try {
     existingUser =
@@ -16,7 +16,7 @@ exports.create = async (req, res, next) => {
     return next(new HttpError('That user already exists.', 400));
   }
 
-  const user = new User({ username, email, password });
+  const user = new User({ firstName, lastName, username, email, password });
 
   try {
     await user.save();
