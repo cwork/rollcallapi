@@ -11,6 +11,8 @@ const createUser = async () => {
       process.exit();
     }
     const user = new User({
+      firstName: process.env.APP_DEFAULT_FIRST_NAME,
+      lastName: process.env.APP_DEFAULT_LAST_NAME,
       username: process.env.APP_DEFAULT_USER,
       email: process.env.APP_DEFAULT_EMAIL,
       password: process.env.APP_DEFAULT_PASSWORD,
