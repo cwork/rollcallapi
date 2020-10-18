@@ -21,7 +21,9 @@ exports.create = async (req, res, next) => {
 
 exports.getAll = async (req, res, next) => {
   try {
-    const employees = await Employee.find();
+    const employees = await Employee.find().sort({
+      lastName: 'asc'
+    });
     return res.json({ success: true, data: employees });
   } catch (error) {
     return next(new HttpError('Unable to retrieve data', 500));
