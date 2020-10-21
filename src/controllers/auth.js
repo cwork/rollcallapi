@@ -30,3 +30,17 @@ exports.login = async (req, res, next) => {
 };
 
 exports.logout = async (req, res, next) => {};
+
+exports.me = async (req, res, next) => {
+  const user = req.user;
+  console.log(user);
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return next(new HttpError("You aren't logged in.", 401));
+    }
+    return res.json({ success: true, user });
+  } catch (error) {
+    return next(new HttpError(error));
+  }
+};
