@@ -23,7 +23,7 @@ exports.login = async (req, res, next) => {
     return res
       .status(200)
       .cookie('token', token, options)
-      .json({ success: true, token });
+      .json({ success: true, token: token, role: user.role });
   } catch (error) {
     return next(new HttpError(error));
   }
